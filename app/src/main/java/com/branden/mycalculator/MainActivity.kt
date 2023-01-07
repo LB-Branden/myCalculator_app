@@ -52,6 +52,37 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun onEqual(view : View){
+        if(lastNumeric){
+            var tvValue = tvInput?.text.toString()
+            var prefix = ""
+
+            try{
+                if(tvValue.startsWith("-")){
+                    prefix = "-"
+                    tvValue = tvValue.substring(1)
+                }
+
+                if(tvValue.contains("-")){
+                    val splitValue = tvValue.split("-")
+                    var one = splitValue[0]
+                    var two = splitValue[1]
+
+                    if(prefix.isNotEmpty()){
+                        one = prefix + one
+                    }
+
+                    var result = one.toDouble() - two.toDouble()
+                    tvInput?.text = result.toString()
+                }
+
+            }catch (e: java.lang.ArithmeticException){
+                // 0으로 나누거나 산술적 계산이 불가능한 경우 예외 처리
+                e.printStackTrace()
+            }
+        }
+    }
+
     private fun isOperatorAdded(value : String) : Boolean{
         return if(value.startsWith("-")){
             false
